@@ -101,7 +101,8 @@ func pngData(from image: NSImage, size: Int) -> Data? {
     return rep.representation(using: .png, properties: [:])
 }
 
-let iconsetPath = "/Users/charmillecoleen/dev/pomi/AppIcon.iconset"
+let cwd = FileManager.default.currentDirectoryPath
+let iconsetPath = "\(cwd)/AppIcon.iconset"
 try? FileManager.default.createDirectory(atPath: iconsetPath, withIntermediateDirectories: true)
 
 let sizes: [(name: String, size: Int)] = [
