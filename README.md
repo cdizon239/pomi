@@ -4,7 +4,7 @@ A minimal macOS menu bar Pomodoro timer built in Swift.
 
 ## Download
 
-Available on the [Mac App Store](https://apps.apple.com/app/pomi). Requires **macOS 13+**.
+Coming soon to the Mac App Store! Requires **macOS 13+**.
 
 ## Features
 
