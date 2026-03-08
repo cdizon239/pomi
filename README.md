@@ -4,7 +4,7 @@ A minimal macOS menu bar Pomodoro timer built in Swift.
 
 ## Download
 
-Grab the latest `pomi.app.zip` from [Releases](../../releases), unzip, and drag `pomi.app` to your Applications folder. Requires **macOS 13+**.
+Available on the [Mac App Store](https://apps.apple.com/app/pomi). Requires **macOS 13+**.
 
 ## Features
 
@@ -27,18 +27,7 @@ Grab the latest `pomi.app.zip` from [Releases](../../releases), unzip, and drag 
 
 ## Build from Source
 
-Requires macOS 13+ and Swift 5.10+ (Command Line Tools for Xcode 16.2 or later).
-
-```bash
-# Build and create pomi.app
-./scripts/build_app.sh
-
-# Or just build and run the binary directly
-swift build -c release
-.build/release/pomi
-```
-
-### Install locally
+Requires macOS 13+ and Swift 5.10+.
 
 ```bash
 ./scripts/build_app.sh
@@ -58,11 +47,6 @@ scripts/
   generate_icon.swift      # Generates AppIcon.icns from code
 ```
 
-## Releasing
+## Privacy
 
-Push a version tag to create a GitHub Release with `pomi.app.zip` attached:
-
-```bash
-git tag v1.0.0
-git push origin v1.0.0
-```
+pomi does not collect, store, or transmit any data. See [Privacy Policy](PRIVACY.md).
