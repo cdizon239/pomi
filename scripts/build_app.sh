@@ -22,4 +22,34 @@ swift "$SCRIPT_DIR/generate_icon.swift"
 iconutil -c icns "$ROOT/AppIcon.iconset" -o "$APP/Contents/Resources/AppIcon.icns"
 rm -rf "$ROOT/AppIcon.iconset"
 
-echo "Done! pomi.app created at: $APP"
+# Code signing and notarization (optional)
+# Set these environment variables to enable:
+#   POMI_SIGN_IDENTITY  - your Developer ID Application identity
+#   POMI_NOTARIZE_PROFILE - your notarytool keychain profile name
+IDENTITY="${POMI_SIGN_IDENTITY:-}"
+NOTARIZE_PROFILE="${POMI_NOTARIZE_PROFILE:-}"
+
+if [ -n "$IDENTITY" ]; then
+    echo "Code signing..."
+    codesign --force --options runtime --sign "$IDENTITY" "$APP/Contents/MacOS/pomi"
+    codesign --force --options runtime --sign "$IDENTITY" "$APP"
+
+    if [ -n "$NOTARIZE_PROFILE" ]; then
+        echo "Creating zip for notarization..."
+        ditto -c -k --sequesterRsrc --keepParent "$APP" "$ROOT/pomi.app.zip"
+
+        echo "Submitting for notarization (this may take a few minutes)..."
+        xcrun notarytool submit "$ROOT/pomi.app.zip" --keychain-profile "$NOTARIZE_PROFILE" --wait
+
+        echo "Stapling notarization ticket..."
+        xcrun stapler staple "$APP"
+
+        rm "$ROOT/pomi.app.zip"
+        echo "Done! pomi.app is signed and notarized at: $APP"
+    else
+        echo "Done! pomi.app is signed (not notarized) at: $APP"
+    fi
+else
+    echo "Done! pomi.app created at: $APP"
+    echo "(To sign and notarize, set POMI_SIGN_IDENTITY and POMI_NOTARIZE_PROFILE)"
+fi
